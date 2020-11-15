@@ -1,0 +1,33 @@
+*{
+    margin:0%;
+    padding:0%;
+}
+#searchdiv{
+    width:70%;
+    height:50px;
+    position: relative;;
+    align-self: center;
+    top:20px;
+    left:15%;
+    align-items: center;
+    display: flex;
+    font-size: 1em;
+    border:2px solid rgba(128, 128, 128, 0.151);
+    border-radius: 2px 2px;
+    box-shadow: 1px 1px 2px rgb(93, 114, 121);
+}
+#searchinput{
+    width:80%;
+    height:50%;
+    margin-right: 2%;
+    outline: none;
+    border:2px solid rgba(230, 221, 221, 0.534);
+    border-radius:10px;
+    margin-left:1em;
+}
+#searchbut{
+    height:50%;
+ border:3px solid white;
+    outline: none;
+    padding:0.3em;
+}

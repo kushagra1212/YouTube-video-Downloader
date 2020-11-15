@@ -1,0 +1,45 @@
+#mainlistdiv
+{
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    float:right;
+    margin-right:7%;
+    margin-top:3em;
+    
+    width:30%;
+    border:2px solid rgba(250, 247, 247, 0.26);
+    border-radius:4px 4px;
+    box-shadow: 2px -4px  10px rgba(4, 5, 4, 0.575);
+}
+#eachlistdiv
+{
+    position: relative;
+    width:90%;
+    margin-left:5%;
+    margin-top:1em;
+    
+    border:2px solid rgba(250, 247, 247, 0.26);
+    border-radius:4px 4px;
+    box-shadow: 4px 4px  10px  rgba(7, 7, 6, 0.575);
+}
+#eachlistimg
+{
+    width:100%;
+    
+    border:2px solid rgba(250, 247, 247, 0.26);
+    border-radius:4px 4px;
+    
+}
+@media only screen and (max-width:445px)
+{
+    #mainlistdiv
+    {
+        position: absolute;
+        margin-top:25em;
+        z-index:-1;
+        width:80%;
+        left:10%;
+    }
+
+}
