@@ -3,7 +3,7 @@ import Styles from  './Item.module.css';
 import axios from 'axios';
 import Search from './Search';
 import List from './List';
-import ourContext from './Context'
+
 class Item extends Component {
     constructor(props) {
         super(props);
@@ -32,12 +32,13 @@ class Item extends Component {
         
             this.setState({video:res.data.items[0],things:""});
                 this.setState({title:res.data.items[0].snippet.title})
+                this.setState({videoList:[]});
             res.data.items.map(ele=>{
                 
                 this.setState({videoList:[...this.state.videoList,ele]});
-                return null;
+            
             });
-            console.log(this.state.videoList)
+            
 
            
             return (res.data);
@@ -55,7 +56,7 @@ componentDidMount()
 {
 
 
-//this.youtube();
+this.youtube();
 
 
 }
@@ -124,12 +125,16 @@ searchhanddler=(tfs)=>
    
     if(tfs)
         {
+           
   this.setState({text:tfs},()=>
   {
-    this.setState({videoList:[]})
-    this.youtube();
+    
+        this.youtube();
+
+    
     
   });
+  console.log(this.state.videoList);
   
 
 
@@ -147,8 +152,8 @@ searchhanddler=(tfs)=>
 
 }
 setselectedvideo=(singlevideo)=>
-{
-    this.setState({video:singlevideo,title:this.state.video.snippet.title});
+{console.log(singlevideo);
+    this.setState({video:singlevideo,title:singlevideo.snippet.title});
 
 
 }
@@ -176,8 +181,8 @@ render()
         </div>
         <div>
        
-        
-        <List getthevideo={(singlevideo)=>this.setselectedvideo(singlevideo)} videolist={this.state.videoList}/>
+    
+        {this.state.videoList[2]?<List getthevideo={this.setselectedvideo} videolist={this.state.videoList}/>:null}
         
        
         </div>
