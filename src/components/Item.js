@@ -20,7 +20,7 @@ class Item extends Component {
         youtube=async()=>
         {
             
-        const data= await axios.get(`https://www.googleapis.com/youtube/v3/search`,{
+        await axios.get(`https://www.googleapis.com/youtube/v3/search`,{
             params:{
                 part:"snippet",
                 key:"AIzaSyCranKkgzC8Bui0dlSL3LhSeZ8dcnMwAmA",
@@ -37,7 +37,7 @@ class Item extends Component {
             res.data.items.map(ele=>{
                 
                 this.setState({videoList:[...this.state.videoList,ele]});
-            
+            return null;
             });
             
 
