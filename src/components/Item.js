@@ -13,7 +13,7 @@ class Item extends Component {
             toggle:"Show",
             video:{},
             description:``,
-            text:"",
+            text:"javascript",
             title:""
 
         }}
@@ -26,7 +26,8 @@ class Item extends Component {
                 key:"AIzaSyCranKkgzC8Bui0dlSL3LhSeZ8dcnMwAmA",
                 type:"video",
                 q:this.state.text,
-                maxResults:3
+                maxResults:3,
+                controls:1
             }}).then((res) => {
 
         
