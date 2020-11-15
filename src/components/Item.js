@@ -26,7 +26,7 @@ class Item extends Component {
                 key:"AIzaSyCranKkgzC8Bui0dlSL3LhSeZ8dcnMwAmA",
                 type:"video",
                 q:this.state.text,
-                maxResults:3,
+                maxResults:5,
                 controls:1
             }}).then((res) => {
 
