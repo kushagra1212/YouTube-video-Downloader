@@ -3,7 +3,7 @@ import Styles from  './Item.module.css';
 import axios from 'axios';
 import Search from './Search';
 import List from './List';
-
+const maxresult=1;
 class Item extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +13,7 @@ class Item extends Component {
             toggle:"Show",
             video:{},
             description:``,
-            text:"javascript",
+            text:"trending",
             title:""
 
         }}
@@ -26,7 +26,7 @@ class Item extends Component {
                 key:"AIzaSyCranKkgzC8Bui0dlSL3LhSeZ8dcnMwAmA",
                 type:"video",
                 q:this.state.text,
-                maxResults:5,
+                maxResults:maxresult,
                 controls:1
             }}).then((res) => {
 
@@ -183,7 +183,7 @@ render()
         <div>
        
     
-        {this.state.videoList[2]?<List getthevideo={this.setselectedvideo} videolist={this.state.videoList}/>:null}
+        {this.state.videoList[maxresult-1]?<List getthevideo={this.setselectedvideo} videolist={this.state.videoList}/>:null}
         
        
         </div>

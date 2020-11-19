@@ -2,6 +2,11 @@
   "short_name": "Youtube Clone",
   "name": "Youtube Clone Using React",
   "icons": [
+    {
+      "src":"youtubeicon.ico",
+      "sizes":"64x64 32x32 24x24 16x16",
+      "type":"image/x-icon"
+    }
    
   ],
   "start_url": ".",
