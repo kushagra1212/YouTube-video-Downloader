@@ -3,7 +3,7 @@ import Styles from  './Item.module.css';
 import axios from 'axios';
 import Search from './Search';
 import List from './List';
-const maxresult=1;
+const maxresult=7;
 class Item extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +13,7 @@ class Item extends Component {
             toggle:"Show",
             video:{},
             description:``,
-            text:"trending",
+            text:"covid 19 news",
             title:""
 
         }}
