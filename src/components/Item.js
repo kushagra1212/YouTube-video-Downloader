@@ -3,9 +3,9 @@ import Styles from "./Item.module.css";
 import axios from "axios";
 import Search from "./Search";
 import List from "./List";
-
-
-const maxresult = 7;
+import Downloader from './Downloader'
+const key=process.env.REACT_APP_KEY
+const maxresult = 4;
 class Item extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +17,8 @@ class Item extends Component {
       description: ``,
       text: "covid 19 news",
       title: "",
+      notwork:false,
+      called:false
    
     };
     this.goup =createRef();
@@ -26,7 +28,7 @@ class Item extends Component {
       .get(`https://www.googleapis.com/youtube/v3/search`, {
         params: {
           part: "snippet",
-          key: "AIzaSyCranKkgzC8Bui0dlSL3LhSeZ8dcnMwAmA",
+          key: key,
           type: "video",
           q: this.state.text,
           maxResults: maxresult,
@@ -34,9 +36,11 @@ class Item extends Component {
         },
       })
       .then((res) => {
+        console.log(res.data.items[0])
         this.setState({ video: res.data.items[0], things: "" });
         this.setState({ title: res.data.items[0].snippet.title });
         this.setState({ videoList: [] });
+        this.setState({called:true})
         res.data.items.map((ele) => {
           this.setState({ videoList: [...this.state.videoList, ele] });
           return null;
@@ -44,11 +48,13 @@ class Item extends Component {
 
         return res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{ console.log(err);
+      this.setState({notwork:true})
+      });
   };
 
   componentDidMount() {
-    this.youtube();
+  this.youtube();
     
   
           
@@ -102,7 +108,8 @@ class Item extends Component {
 
   render() {
     return (
-      <div>
+      <>
+     {!this.state.notwork? <div>
         <Search  searchhanddler={(tfs) => this.searchhanddler(tfs)} />
 
         <div ref={ref=>this.goup=ref} id={Styles.mainvideodiv}>
@@ -115,8 +122,13 @@ class Item extends Component {
             >{`${this.state.toggle} description`}</button>
             <p id={Styles.mainvideodescription}>
               {this.state.description}
+              
               <br />
             </p>
+            <button onClick={()=>this.setState({notwork:true})} id={Styles.downloadbut}>Download</button>
+           
+          
+            
           </div>
         </div>
         <div>
@@ -127,7 +139,9 @@ class Item extends Component {
             />
           ) : null}
         </div>
-      </div>
+      </div>: <Downloader toptext={this.state.called?"URL has been selected":"Enter YouTube Video URL"}  videoid={this.state.called?this.state.video.id.videoId:""}   />}
+     
+      </>
     );
   }
 }

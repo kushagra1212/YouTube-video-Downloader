@@ -27,7 +27,14 @@
 }
 #searchbut{
     height:50%;
- border:3px solid white;
+ border:3px solid rgba(255, 255, 255, 0);
     outline: none;
     padding:0.3em;
+    border-radius: 5px;
+    background-color: yellow;
+    box-shadow: 2px 2px 5px 2px gray;
+}
+#searchbut:active{
+    background-color: turquoise;
+    color: white;
 }
