@@ -16,7 +16,7 @@ if(videoid)
 {
     setvideourl(`https://www.youtube.com/watch?v=${videoid}`);
 }
- },[])
+ },[videoid])
 const downloadhandle=async()=>{
     if(!videourl)
     {
