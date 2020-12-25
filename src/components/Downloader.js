@@ -5,11 +5,12 @@ import axios from 'axios'
 import Styles from './Downloader.module.css'
 import fileDownload from 'js-file-download';
 
-const url="https://youtube-downloader11.herokuapp.com";
-const Downloader=({videoid,toptext})=>{
+const url="http://localhost:5000";
+const Downloader=({videoid,toptext,showdownloadhandle})=>{
     const [err,seterr]=useState({err:false,select:'',videourl:''});
 const [select,setselect]=useState('Select Format');
 const [videourl,setvideourl]=useState('');
+const [loading,setloading]=useState(false);
 
  useEffect(()=>{
 if(videoid)
@@ -31,6 +32,7 @@ const downloadhandle=async()=>{
    
     if(videourl && select)
     {
+        setloading(true);
         seterr({...err,err:false,select:'',videourl:''})
 
         await axios.post(`${url}/download`,{
@@ -45,6 +47,8 @@ const downloadhandle=async()=>{
             await axios.get(`${url}/download2`,{responseType:'blob'}).then((res)=>{
                 if(!res.data.message){
                     console.log(res.data)
+                    setloading(false)
+                    console.log(fileDownload)
                 fileDownload(res.data,'video.mp4')
              }
             else{
@@ -67,7 +71,7 @@ const downloadhandle=async()=>{
         <div  className={Styles.maindiv}   >
         <label>{toptext}</label>
         <div className={Styles.divofinput}>
-        
+        <button className={Styles.close}  onClick={()=>showdownloadhandle()} >X</button>
         <input placeholder="Enter URL" value={videourl} onChange={e=>setvideourl(e.target.value)} className={Styles.input} type="text"   />
        <label>{err.err?<label style={{color:"red"}} >{err.videourl}</label>:null}</label> 
         <select value={select} onChange={(e)=>setselect(e.target.value)} className={Styles.select}>
@@ -80,7 +84,8 @@ const downloadhandle=async()=>{
         <label>{err.err?<label style={{color:"red"}} >{err.select}</label>:null}</label>
        </div>
         <button onClick={downloadhandle} className={Styles.downloadbut}>Download</button>
-     
+         {loading?<h4>downloading ...
+         </h4>:null}
         </div>
         </>
     )

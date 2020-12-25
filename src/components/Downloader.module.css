@@ -1,5 +1,5 @@
 .maindiv{
-    position: relative;
+    position: absolute;
    display: flex;
    flex-direction: column;
 
@@ -25,6 +25,16 @@ box-shadow: 2px 2px 5px 1px rgb(236, 191, 94);
  flex-direction: row;
  align-items: center;
  justify-content: center;
+}
+.close{
+   
+    position: absolute;
+    left:5%;
+    width:20px;
+    top:100px;
+    background-color: red;
+    border: none;
+    color: white;
 }
 .input{
     margin:10px;

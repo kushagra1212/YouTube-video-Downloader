@@ -4,6 +4,7 @@ import axios from "axios";
 import Search from "./Search";
 import List from "./List";
 import Downloader from './Downloader'
+const urll="https://youtube-downloader11.herokuapp.com";
 const key=process.env.REACT_APP_KEY
 const maxresult = 4;
 class Item extends Component {
@@ -17,14 +18,16 @@ class Item extends Component {
       description: ``,
       text: "covid 19 news",
       title: "",
-      notwork:false,
-      called:false
+      notwork:true,
+      called:false,
+      showdownload:false
    
     };
     this.goup =createRef();
   }
   youtube = async () => {
-    await axios
+    if(!this.state.notwork)
+    {await axios
       .get(`https://www.googleapis.com/youtube/v3/search`, {
         params: {
           part: "snippet",
@@ -49,36 +52,72 @@ class Item extends Component {
         return res.data;
       })
       .catch((err) =>{ console.log(err);
-      this.setState({notwork:true})
+        this.setState({notwork:true})
       });
+
+    }
+      else{
+        axios.get(`${urll}/search/${this.state.text}`).then((res)=>{
+          console.log(res);
+          this.setState({ video: res.data.items[2], things: "" });
+          this.setState({ title: res.data.items[2].title });
+          this.setState({ videoList: [] });
+          this.setState({called:true})
+          res.data.items.map((ele,id) => {
+            if(ele.type==="video")
+            {
+              this.setState({ videoList: [...this.state.videoList, ele] });
+           
+            }
+            return null;
+          });
+          
+
+
+        }).catch((err)=>{
+          console.log(err)
+        })
+      }
   };
 
   componentDidMount() {
   this.youtube();
-    
+ 
+
+    this.setState({showdownload:false})
   
           
   }
   show = () => {
+    let notwork=this.state.notwork;
     if (this.state.things === "Loading...") {
       return <div>Loading...</div>;
     } else {
       return (
         <div>
-          <iframe
+          {!notwork?<iframe
             title={this.state.video.id.videoId}
             width="50%"
             height="400"
             src={`https://www.youtube.com/embed/${this.state.video.id.videoId}`}
             frameBorder="0"
             allowFullScreen
-          ></iframe>
+          ></iframe>:<iframe
+          title={this.state.video.title}
+          width="50%"
+          height="400"
+          src={`https://www.youtube.com/embed/${this.state.video.id}`}
+          frameBorder="0"
+          allowFullScreen
+        ></iframe>}
          
         </div>
       );
     }
   };
   showit = () => {
+  if(!this.state.notwork)
+  {
     if (this.state.toggle === "Show") {
       this.setState({ toggle: "Hide" });
       this.setState({ description: this.state.video.snippet.description });
@@ -86,6 +125,15 @@ class Item extends Component {
       this.setState({ toggle: "Show" });
       this.setState({ description: `` });
     }
+  }else{
+    if (this.state.toggle === "Show") {
+      this.setState({ toggle: "Hide" });
+      this.setState({ description: this.state.video.description });
+    } else {
+      this.setState({ toggle: "Show" });
+      this.setState({ description: `` });
+    }
+  }
   };
   butclickhandel = () => {
     this.showit();
@@ -102,17 +150,23 @@ class Item extends Component {
   };
   setselectedvideo = (singlevideo) => {
 
-    this.setState({ video: singlevideo, title: singlevideo.snippet.title });
+    this.setState({ video: singlevideo, title: singlevideo.title });
     this.goup.scrollIntoView({behavior:"smooth"})
   };
+ showdownloadhandle=()=>{
+   this.setState({showdownload:false})
+ }
 
   render() {
+  
+    let showdownload=this.state.showdownload;
+    console.log(showdownload)
     return (
       <>
-     {!this.state.notwork? <div>
-        <Search  searchhanddler={(tfs) => this.searchhanddler(tfs)} />
+    <div  >
+        <Search style={showdownload?{pointerEvents:"none"}:{pointerEvents:"initial"}} searchhanddler={(tfs) => this.searchhanddler(tfs)} />
 
-        <div ref={ref=>this.goup=ref} id={Styles.mainvideodiv}>
+        <div style={showdownload?{pointerEvents:"none"}:{pointerEvents:"initial"}} ref={ref=>this.goup=ref} id={Styles.mainvideodiv}>
           <div id={Styles.mainvideo}> {this.show()} </div>
           <h2 id={Styles.mainvideotitle}>{this.state.title} </h2>
           <div id={Styles.maindescription}>
@@ -125,21 +179,23 @@ class Item extends Component {
               
               <br />
             </p>
-            <button onClick={()=>this.setState({notwork:true})} id={Styles.downloadbut}>Download</button>
+            <button onClick={()=>this.setState({showdownload:true})} id={Styles.downloadbut}>Download</button>
            
           
             
           </div>
         </div>
-        <div>
+        <div style={showdownload?{pointerEvents:"none"}:{pointerEvents:"initial"}}>
           {this.state.videoList[maxresult - 1] ? (
             <List
               getthevideo={this.setselectedvideo}
               videolist={this.state.videoList}
+              notwork={this.state.notwork}
             />
           ) : null}
         </div>
-      </div>: <Downloader toptext={this.state.called?"URL has been selected":"Enter YouTube Video URL"}  videoid={this.state.called?this.state.video.id.videoId:""}   />}
+      </div>
+      {this.state.showdownload?<Downloader showdownloadhandle={()=>this.showdownloadhandle()}  toptext={this.state.called?"URL has been selected":"Enter YouTube Video URL"}  videoid={this.state.called?this.state.video.id:""}/>:null}
      
       </>
     );
