@@ -39,7 +39,7 @@ class List extends React.Component {
         })}
       </div>: <div id={Styles.mainlistdiv}>
         {this.state.videolist.map((ele, id) => {
-          const videoId = ele.id;
+      
 
           const videotitle = ele.title;
           return (
