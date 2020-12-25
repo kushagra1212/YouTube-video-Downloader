@@ -3,14 +3,17 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'
 
 import Styles from './Downloader.module.css'
-import fileDownload from 'js-file-download';
+
 
 const url="https://youtube-downloader11.herokuapp.com";
-const Downloader=({videoid,toptext,showdownloadhandle})=>{
+const Downloader=({videoid,toptext,videotitle,showdownloadhandle})=>{
     const [err,seterr]=useState({err:false,select:'',videourl:''});
 const [select,setselect]=useState('Select Format');
 const [videourl,setvideourl]=useState('');
 const [loading,setloading]=useState(false);
+const [progress,setprogress]=useState({p:0,t:''})
+
+let percentage=null;
 
  useEffect(()=>{
 if(videoid)
@@ -44,21 +47,63 @@ const downloadhandle=async()=>{
         }).then(async(results)=>{
 
             console.log(results);
-            await axios.get(`${url}/download2`,{responseType:'blob'}).then((res)=>{
-                if(!res.data.message){
-                    console.log(res.data)
-                    setloading(false)
-                    console.log(fileDownload)
-                fileDownload(res.data,'video.mp4')
-             }
-            else{
-                console.log(res.data.message)
-            }}
-                );
+            
+    axios.get(`${url}/download2`,{responseType:'blob',onDownloadProgress(progress){
+        percentage=Math.floor((progress.loaded*100)/progress.total);
+        console.log(progress);
+         setprogress({p:percentage,t:'Downloading completed'});
+         
+      }}).then((res)=>{
+  
+                  
+              if(!res.data.message){
+                  console.log(res)
+                  const link = document.createElement("a");
+                  const myurl=window.webkitURL||window.URL;
+                  let b=new Blob([res.data])
+                
+                  const uRl = myurl.createObjectURL(b);
+                 
+                  //video.src=uRl;
+                  
+              
+                 // video.play();
+                 
+                  
+                
+                 
+                 link.href = uRl;
+                  link.setAttribute("download", `${videotitle}.mp4`); //or any other extension
+                  document.body.appendChild(link);
+                  link.click();
+              
+           }
+          else{
+              console.log(res.data.message)
+          }}
+      ); 
+           
             
         }).catch((err)=>{
             seterr({...err,err:true,select:'',videourl:'url is invalid'})
         })
+      
+       
+        const video=document.createElement('video');
+        video.setAttribute('preload','metadata')
+        video.setAttribute("width", "320");
+        video.setAttribute("height", "240");
+        video.setAttribute("controls", "controls");
+        if (video.canPlayType("video/mp4")) {
+            video.setAttribute("src","movie.mp4");
+        } else {
+            video.setAttribute("src","movie.ogg");
+        }
+       
+        //document.body.appendChild(video)
+       
+    
+    
     
         setselect('Select Format')
         setvideourl('')
@@ -66,6 +111,7 @@ const downloadhandle=async()=>{
         return;
     }
 }
+
     return (
         <>
         <div  className={Styles.maindiv}   >
@@ -84,7 +130,7 @@ const downloadhandle=async()=>{
         <label>{err.err?<label style={{color:"red"}} >{err.select}</label>:null}</label>
        </div>
         <button onClick={downloadhandle} className={Styles.downloadbut}>Download</button>
-         {loading?<h4>downloading ...
+         {loading?<h4>{progress.p===100?<h4>Downloading Done</h4>:<h4>Downloading {progress.p}% Completed</h4>}
          </h4>:null}
         </div>
         </>

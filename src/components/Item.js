@@ -195,7 +195,7 @@ class Item extends Component {
           ) : null}
         </div>
       </div>
-      {this.state.showdownload?<Downloader showdownloadhandle={()=>this.showdownloadhandle()}  toptext={this.state.called?"URL has been selected":"Enter YouTube Video URL"}  videoid={this.state.called?this.state.video.id:""}/>:null}
+      {this.state.showdownload?<Downloader showdownloadhandle={()=>this.showdownloadhandle()}  toptext={this.state.called?"URL has been selected":"Enter YouTube Video URL"} videotitle={this.state.video.title} videoid={this.state.called?this.state.video.id:""}/>:null}
      
       </>
     );
