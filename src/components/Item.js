@@ -103,7 +103,7 @@ class Item extends Component {
   show = () => {
     let notwork=this.state.notwork;
     if (this.state.things === "Loading...") {
-      return <img  src={thumbnailload} width="100%" height="100%"    frameBorder="0"
+      return <img  src={thumbnailload} width="100%" height="100%" alt="NaN"   frameBorder="0"
       />;
     } else {
       return (
