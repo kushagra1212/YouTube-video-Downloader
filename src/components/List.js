@@ -1,26 +1,49 @@
 import React from "react";
 import Styles from "./List.module.css";
 
-class List extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      videolist: props.videolist,
-      notwork:props.notwork
-    };
-  }
+const List=({videolists,notwork,getthevideo})=> {
+  
+  
+  
 
-  selectionhandle = (ele) => {
-    this.props.getthevideo(ele);
+  const selectionhandle = (ele) => {
+    getthevideo(ele);
   };
-  render() {
+ 
     return (
      <>
-     {!this.state.notwork? <div id={Styles.mainlistdiv}>
-        {this.state.videolist.map((ele, id) => {
-          const videoId = ele.id.videoId;
+     <div id={Styles.mainlistdiv}>
+        {videolists.map((ele, id) => {
+      
 
-          const videotitle = ele.snippet.title;
+          let videotitle = ele.title;
+        
+          return (
+            <div
+              key={id}
+              onClick={()=>selectionhandle(ele)}
+              id={Styles.eachlistdiv}
+            >
+              <img
+                id={Styles.eachlistimg}
+                src={ele.bestThumbnail.url}
+                alt="hello"
+              ></img>
+          {videotitle==='/static/media/MessagePreloader.4e51e83e.gif'?<img alt="not found" width="100%" height="50px" src={videotitle}  />:<h3>{videotitle}</h3>} 
+            </div>
+          );
+        })}
+      </div>
+     </>
+    );
+  }
+
+export default List;
+/* {!this.state.notwork? <div id={Styles.mainlistdiv}>
+        {this.state.videolist.map((ele, id) => {
+          let videoId = ele.id.videoId;
+
+          let videotitle = ele.snippet.title;
           return (
             <div
               key={id}
@@ -37,29 +60,4 @@ class List extends React.Component {
             </div>
           );
         })}
-      </div>: <div id={Styles.mainlistdiv}>
-        {this.state.videolist.map((ele, id) => {
-      
-
-          const videotitle = ele.title;
-          return (
-            <div
-              key={id}
-              onClick={this.selectionhandle.bind(this, ele)}
-              id={Styles.eachlistdiv}
-            >
-              <img
-                id={Styles.eachlistimg}
-                src={ele.bestThumbnail.url}
-                alt="Thumbnail"
-              ></img>
-              <h3 id={Styles.eachlisttitle}>{videotitle} </h3>
-            </div>
-          );
-        })}
-      </div>}
-     </>
-    );
-  }
-}
-export default List;
+      </div>: */

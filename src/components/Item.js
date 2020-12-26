@@ -4,15 +4,17 @@ import axios from "axios";
 import Search from "./Search";
 import List from "./List";
 import Downloader from './Downloader'
+import thumbnailload from '../images/BubblePreloader.gif'
+import titleload from '../images/MessagePreloader.gif'
 const urll="https://youtube-downloader11.herokuapp.com";
 const key=process.env.REACT_APP_KEY
-const maxresult = 4;
+const maxresult = 30;
 class Item extends Component {
   constructor(props) {
     super(props);
     this.state = {
       things: "Loading...",
-      videoList: [],
+      videoList: [{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}}],
       toggle: "Show",
       video: {},
       description: ``,
@@ -26,6 +28,9 @@ class Item extends Component {
     this.goup =createRef();
   }
   youtube = async () => {
+    this.setState({videoList:[{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}},{title:titleload,bestThumbnail:{url:thumbnailload}}]})
+    this.setState({things:'Loading...'})
+    this.setState({title:''})
     if(!this.state.notwork)
     {await axios
       .get(`https://www.googleapis.com/youtube/v3/search`, {
@@ -39,7 +44,7 @@ class Item extends Component {
         },
       })
       .then((res) => {
-        console.log(res.data.items[0])
+       
         this.setState({ video: res.data.items[0], things: "" });
         this.setState({ title: res.data.items[0].snippet.title });
         this.setState({ videoList: [] });
@@ -57,21 +62,28 @@ class Item extends Component {
 
     }
       else{
-        axios.get(`${urll}/search/${this.state.text}`).then((res)=>{
-          console.log(res);
+      
+     
+        
+        axios.get(`${urll}/search/${this.state.text}/${maxresult}`).then((res)=>{
+         // console.log(res.data);
+         this.setState({things:''})
           this.setState({ video: res.data.items[2], things: "" });
           this.setState({ title: res.data.items[2].title });
           this.setState({ videoList: [] });
           this.setState({called:true})
           res.data.items.map((ele,id) => {
+          
             if(ele.type==="video")
             {
+              console.log(ele)
               this.setState({ videoList: [...this.state.videoList, ele] });
            
             }
             return null;
           });
-          
+        
+   
 
 
         }).catch((err)=>{
@@ -91,7 +103,8 @@ class Item extends Component {
   show = () => {
     let notwork=this.state.notwork;
     if (this.state.things === "Loading...") {
-      return <div>Loading...</div>;
+      return <img  src={thumbnailload} width="100%" height="100%"    frameBorder="0"
+      />;
     } else {
       return (
         <div>
@@ -143,13 +156,13 @@ class Item extends Component {
       this.setState({ text: tfs }, () => {
         this.youtube();
       });
-      console.log(this.state.videoList);
+      
     } else if (tfs === "") {
       console.log("please write something");
     }
   };
   setselectedvideo = (singlevideo) => {
-
+console.log(singlevideo)
     this.setState({ video: singlevideo, title: singlevideo.title });
     this.goup.scrollIntoView({behavior:"smooth"})
   };
@@ -185,14 +198,14 @@ class Item extends Component {
             
           </div>
         </div>
-        <div style={showdownload?{pointerEvents:"none"}:{pointerEvents:"initial"}}>
-          {this.state.videoList[maxresult - 1] ? (
+        <div className={Styles.list} style={showdownload?{pointerEvents:"none"}:{pointerEvents:"initial"}}>
+         
             <List
               getthevideo={this.setselectedvideo}
-              videolist={this.state.videoList}
+              videolists={this.state.videoList}
               notwork={this.state.notwork}
             />
-          ) : null}
+        
         </div>
       </div>
       {this.state.showdownload?<Downloader showdownloadhandle={()=>this.showdownloadhandle()}  toptext={this.state.called?"URL has been selected":"Enter YouTube Video URL"} videotitle={this.state.video.title} videoid={this.state.called?this.state.video.id:""}/>:null}

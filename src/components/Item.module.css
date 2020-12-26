@@ -61,6 +61,9 @@ background-color: rgb(248, 60, 27);
     width:100%;
     font-size: 1em;
 }
+#list{
+    height: 100%;
+}
 
 @media only screen and (min-width:768px)
 {
