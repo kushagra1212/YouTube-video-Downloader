@@ -17,7 +17,7 @@ const List=({videolists,notwork,getthevideo})=> {
       
 
           let videotitle = ele.title;
-        
+        console.log(ele)
           return (
             <div
               key={id}
@@ -26,7 +26,7 @@ const List=({videolists,notwork,getthevideo})=> {
             >
               <img
                 id={Styles.eachlistimg}
-                src={ele.bestThumbnail.url}
+                src={ele.thumbnails[0].url}
                 alt="hello"
               ></img>
           {videotitle==='/static/media/MessagePreloader.4e51e83e.gif'?<img alt="not found" width="100%" height="50px" src={videotitle}  />:<h3>{videotitle}</h3>} 
