@@ -1,6 +1,6 @@
 {
-  "short_name": "Youtube Clone",
-  "name": "Youtube Clone Using React",
+  "short_name": "YouTube video Downloader",
+  "name": "YouTube video Downlaoder",
   "icons": [
     {
       "src":"youtubeicon.ico",
