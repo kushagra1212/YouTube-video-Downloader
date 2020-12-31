@@ -16,6 +16,7 @@
     border-radius: 2px 2px;
     box-shadow: 1px 1px 2px rgb(93, 114, 121);
 }
+
 #searchinput{
     width:80%;
     height:50%;
@@ -37,4 +38,18 @@
 #searchbut:active{
     background-color: turquoise;
     color: white;
+}
+@media only screen and (max-width:475px)
+{
+    #searchdiv{
+        top:2px;
+        height: 30px;
+        padding: 0%;
+
+    }
+    #searchbut{
+        padding: 0%;
+    
+        height: 20px;
+    }
 }

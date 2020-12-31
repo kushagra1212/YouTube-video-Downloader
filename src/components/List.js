@@ -11,13 +11,13 @@ const List=({videolists,notwork,getthevideo})=> {
   };
  
     return (
-     <>
+   
      <div id={Styles.mainlistdiv}>
         {videolists.map((ele, id) => {
       
 
           let videotitle = ele.title;
-        console.log(ele)
+   
           return (
             <div
               key={id}
@@ -34,7 +34,7 @@ const List=({videolists,notwork,getthevideo})=> {
           );
         })}
       </div>
-     </>
+
     );
   }
 

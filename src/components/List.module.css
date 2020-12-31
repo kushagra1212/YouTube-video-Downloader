@@ -6,7 +6,8 @@
     float:right;
     margin-right:7%;
     margin-top:5%;
-    
+    height: 90%;
+    overflow:scroll;
     width:30%;
     border:2px solid rgba(250, 247, 247, 0.26);
     border-radius:4px 4px;
@@ -41,11 +42,13 @@
 {
     #mainlistdiv
     {
-        position: absolute;
-        margin-top:25em;
+        position: relative;
+        margin-top:23em;
         z-index:-1;
         width:80%;
-        left:10%;
+        right: 2%;
+      
+      
     }
 
 }

@@ -1,0 +1,91 @@
+.sidelist{
+    position: absolute;
+    border: none;
+   z-index: 2000;
+ 
+   transform: translate(-50%,-50%);
+   outline: none;
+   left: 7%;
+   top: 7%;
+ 
+   box-shadow: 1px 1px 5px grey;
+}
+.sidelist:active{
+
+    box-shadow: 2px 2px 10px 2px grey;
+}
+.sidelist img{
+    border: 2px solid rgba(0, 128, 0, 0);
+    border-radius: 2%;
+}
+.listdiv1{
+    position: absolute;
+    width:0%;
+    background-color: rgb(43, 46, 46);
+    color: aliceblue;
+    height:100%;
+    z-index: 2000;
+    animation: sidelistanm1 0.5s;
+    animation-timing-function: ease-in-out;
+    overflow: auto;
+    scroll-behavior:smooth;
+    overflow-x: hidden;
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    box-shadow: 2px 2px 100px 2px black;
+    animation-fill-mode: forwards;
+}
+.listdiv2{
+    position: absolute;
+    width:70%;
+    background-color: rgb(43, 46, 46);
+    height:100%;
+    z-index: 2000;
+    animation: sidelistanm2 0.5s;
+    animation-timing-function: ease-in-out;
+    
+    animation-fill-mode: forwards;
+}
+.item{
+    z-index: 1000;
+    position: relative;
+    background-color: antiquewhite;
+    color: black;
+    border: 2px solid rgba(128, 128, 128, 0) ;
+    border-radius:5%;
+    margin:5%;
+    box-shadow: 1px 1px 10px 1px rgb(158, 204, 248);
+    
+}
+.title{
+    background-color: rgb(205, 106, 252);
+    border: 2px solid rgba(128, 128, 128, 0) ;
+    border-radius:5%;
+    box-shadow:2px 2px 2px  burlywood;
+}
+@keyframes sidelistanm1{
+    from{
+width:0%;
+    }
+    to{
+        width:70%;
+    }
+}
+
+@keyframes sidelistanm2{
+    from{
+width:70%;
+    }
+    to{
+        width:0%;
+    }
+}
+@media only screen and (max-width:475px)
+{
+.sidelist{
+    top:4%;
+    border: 2px solid white;
+    border-radius: 20%10px;
+}
+   
+}
