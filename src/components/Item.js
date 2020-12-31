@@ -231,11 +231,11 @@ class Item extends Component {
     this.setState({ showdownload: false });
   };
   checkit = (e) => {
-    {
+    
       if (this.newref.current.contains(e.target)) {
         this.props.Dis();
       }
-    }
+    
   };
   render() {
     let showdownload = this.state.showdownload;

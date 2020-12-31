@@ -17,7 +17,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
     t: "",
     total: { value: null, unit: null },
   });
-  const [cancelthetoken, setcancel] = useState(axios.CancelToken.source());
+  const cancelthetoken = axios.CancelToken.source();
   let percentage = null;
   const dispatch = useDispatch();
 
