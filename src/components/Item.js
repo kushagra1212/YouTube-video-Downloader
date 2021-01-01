@@ -221,7 +221,7 @@ class Item extends Component {
     }
   };
   setselectedvideo = (singlevideo) => {
- this.showit();
+ if(this.state.toggle==="Hide") this.showit();
     this.setState({ video: singlevideo, title: singlevideo.title });
     this.goup.scrollIntoView({ behavior: "smooth" });
 
@@ -285,13 +285,13 @@ class Item extends Component {
                 </button>
               </div>
             </div>
-            <div ref={this.newref} className={Styles.list}>
+            
               <List
                 getthevideo={this.setselectedvideo}
                 videolists={this.state.videoList}
                 notwork={this.state.notwork}
               />
-            </div>
+         
           </div>
         </div>
         <div>

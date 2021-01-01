@@ -6,7 +6,7 @@ import byteSize from "byte-size";
 import { useDispatch } from "react-redux";
 
 const url = "https://youtube-downloader11.herokuapp.com";
-
+let cancelthetoken = axios.CancelToken.source();
 const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
   const [err, seterr] = useState({ err: false, select: "", videourl: "" });
   const [select, setselect] = useState("Select Format");
@@ -17,7 +17,8 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
     t: "",
     total: { value: null, unit: null },
   });
-  const cancelthetoken = axios.CancelToken.source();
+
+
   let percentage = null;
   const dispatch = useDispatch();
 

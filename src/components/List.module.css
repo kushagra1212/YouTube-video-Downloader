@@ -43,7 +43,8 @@
     #mainlistdiv
     {
         position: relative;
-        margin-top:23em;
+        margin-top:25em;
+        padding-top: 2%;
         z-index:-1;
         width:80%;
         right: 2%;

@@ -17,7 +17,7 @@ const Sidelist = () => {
           onClick={() => dispatch({ type: "toggle", payload: { show: true } })}
           className={Styles.sidelist}
         >
-          <img width="30px" height="30px" alt="NAN" src="https://img2.pngio.com/filedownload-iconpng-wikimedia-commons-download-icon-png-875_875.png" />
+          <img width="25px" height="25px" alt="NAN" src="https://img2.pngio.com/filedownload-iconpng-wikimedia-commons-download-icon-png-875_875.png" />
         </button>
         {show ? (
           <div className={Styles.listdiv1}>
