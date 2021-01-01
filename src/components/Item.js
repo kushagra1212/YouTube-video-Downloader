@@ -258,8 +258,7 @@ class Item extends Component {
             style={
               (showdownload
                 ? { pointerEvents: "none" }
-                : { pointerEvents: "initial" },
-              { width: "100%", position: "absolute", height: "100%" })
+                : { pointerEvents: "initial" })
             }
             onClick={(e) => this.checkit(e)}
             ref={this.newref}

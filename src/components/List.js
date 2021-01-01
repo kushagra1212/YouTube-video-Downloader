@@ -13,24 +13,28 @@ const List=({videolists,notwork,getthevideo})=> {
     return (
    
      <div id={Styles.mainlistdiv}>
+      
         {videolists.map((ele, id) => {
       
 
           let videotitle = ele.title;
    
           return (
-            <div
+        
+            <div onClick={()=>selectionhandle(ele)} 
               key={id}
-              onClick={()=>selectionhandle(ele)}
+             
               id={Styles.eachlistdiv}
             >
               <img
                 id={Styles.eachlistimg}
                 src={ele.thumbnails[0].url}
                 alt="hello"
-              ></img>
+              />
           {videotitle==='/static/media/MessagePreloader.4e51e83e.gif'?<img alt="not found" width="100%" height="50px" src={videotitle}  />:<h3>{videotitle}</h3>} 
+        
             </div>
+         
           );
         })}
       </div>

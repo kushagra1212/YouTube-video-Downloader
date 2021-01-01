@@ -6,7 +6,7 @@ import byteSize from "byte-size";
 import { useDispatch } from "react-redux";
 
 const url = "https://youtube-downloader11.herokuapp.com";
-let cancelthetoken = axios.CancelToken.source();
+
 const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
   const [err, seterr] = useState({ err: false, select: "", videourl: "" });
   const [select, setselect] = useState("Select Format");
@@ -17,18 +17,26 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
     t: "",
     total: { value: null, unit: null },
   });
-
+  const [cancelthetoken,setcancelthetoken] =useState(axios.CancelToken.source()) ;
 
   let percentage = null;
   const dispatch = useDispatch();
-
+  const canceldownloadhandle=()=>{
+    cancelthetoken.cancel();
+    setprogress({ ...progress, t: "Download Cancelled" });
+setcancelthetoken(axios.CancelToken.source())
+    dispatch({
+      type: "UPDATE",
+      payload: {
+        progress: { ...progress, t: "Download Cancelled" },
+      }
+    });
+   
+  }
   useEffect(() => {
- 
-        if (videoid) {
-            setvideourl(`https://www.youtube.com/watch?v=${videoid}`);
-          }
-
-    
+    if (videoid) {
+      setvideourl(`https://www.youtube.com/watch?v=${videoid}`);
+    }
   }, [videoid]);
   const downloadhandle = () => {
     if (!videourl) {
@@ -77,6 +85,8 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
                   title: videotitle,
                   t: "Downloading completed",
                   total: byteSize(progress.total),
+                  cancelthetoken:cancelthetoken,
+                  canceldownloadhandle
                 });
                 dispatch({
                   type: "UPDATE",
@@ -86,7 +96,8 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
                       title: videotitle,
                       t: "Downloading completed",
                       total: byteSize(progress.total),
-                    },
+                      cancelthetoken:cancelthetoken.token,canceldownloadhandle
+                    }
                   },
                 });
               },
@@ -132,10 +143,9 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
 
       setselect("Select Format");
       setvideourl("");
-
-   
     }
   };
+
 
   return (
     <>
@@ -146,6 +156,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
             className={Styles.close}
             onClick={() => {
               showdownloadhandle();
+
             }}
           >
             X
@@ -195,16 +206,9 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
                 </h6>
                 <button
                   onClick={() => {
-                    cancelthetoken.cancel();
-                    setprogress({ ...progress, t: "download Cancelled" });
-
-                    dispatch({
-                      type: "UPDATE",
-                      payload: {
-                        progress: { ...progress, t: "Downloading Cancelled" },
-                      },
-                    });
-                    showdownloadhandle();
+                  canceldownloadhandle();
+                  showdownloadhandle();
+                   
                   }}
                   className={Styles.canceldownloadbut}
                 >

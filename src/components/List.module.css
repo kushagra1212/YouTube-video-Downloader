@@ -7,7 +7,7 @@
     margin-right:7%;
     margin-top:5%;
     height: 90%;
-    overflow:scroll;
+ 
     width:30%;
     border:2px solid rgba(250, 247, 247, 0.26);
     border-radius:4px 4px;
@@ -27,8 +27,9 @@
     box-shadow: 4px 4px  10px  rgba(7, 7, 6, 0.575);
 }
 #eachlistdiv:active{
-    color: white;
-    background-color: black;
+  
+
+   box-shadow: 5px 5px 50px 5px gray;
 }
 #eachlistimg
 {
@@ -48,6 +49,9 @@
         z-index:-1;
         width:80%;
         right: 2%;
+        height: 1000px;
+        overflow: scroll;
+    
       
       
     }

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
    
 
 const Sidelist = () => {
+
   let show = useSelector((state) => state.Reducer.show);
   let progress = useSelector((state) => state.Reducer2);
 
@@ -23,6 +24,7 @@ const Sidelist = () => {
           <div className={Styles.listdiv1}>
              {!progress.length>0?<h3> Downloading will be Shown here</h3>:null}
             {progress.slice(0).reverse().map((ele, id) => {
+              console.log(ele)
               if (ele.total.value) {
                 return (
                   <div className={Styles.item} key={id}>
@@ -33,6 +35,10 @@ const Sidelist = () => {
                     <h4>
                       Total Size : {ele.total.value} {ele.total.unit}
                     </h4>
+                    {ele.t!=="Download Cancelled" ?<button onClick={()=>{ele.canceldownloadhandle();
+                   
+                    
+                  }}  >cancel</button>:null}
                   </div>
                 );
               }
