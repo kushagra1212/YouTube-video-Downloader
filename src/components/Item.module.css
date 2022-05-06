@@ -25,7 +25,7 @@
   box-shadow: 0.4px 0.4px 2px 0.4px rgba(128, 128, 128, 0.61);
 }
 .channelInfo img {
-  width: 15%;
+  width: 10%;
   height: 50%;
   border-radius: 50px;
 }
@@ -112,5 +112,7 @@
     width: 100%;
     margin-top: 5%;
     padding: 0%;
+    /* height: 65vh; */
+    position: relative;
   }
 }
