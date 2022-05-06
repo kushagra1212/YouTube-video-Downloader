@@ -53,7 +53,7 @@ class Item extends Component {
       toggle: "Show",
       video: {},
       description: ``,
-      text: "covid 19 news",
+      text: "covid",
       title: "",
       notwork: true,
       called: false,

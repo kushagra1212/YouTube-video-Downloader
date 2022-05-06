@@ -17,8 +17,14 @@
 
 #eachlistdiv {
   margin-bottom: 2em;
+
   transform: scale(1);
   transition: transform ease-in-out cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s;
+}
+#eachlistdiv:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  background-color: #d6d9eb;
 }
 #eachlistdiv:active {
   box-shadow: 0px 0px 10px 0px gray;
@@ -33,12 +39,14 @@
 @media only screen and (max-width: 445px) {
   #mainlistdiv {
     position: relative;
-    margin-top: 110vh;
+    /* margin-top: 110vh; */
     /* padding-top: 2%; */
     z-index: -1;
     width: 100%;
     /* right: 2%; */
     margin: 0%;
+    padding: 0%;
+    margin-top: 200%;
     /* height: 1000px; */
     overflow: scroll;
   }

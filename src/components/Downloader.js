@@ -16,7 +16,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
   const [loading, setloading] = useState(false);
   const [progress, setprogress] = useState({
     p: 0,
-    t: "",
+    t: "Downloading Completed",
     total: { value: null, unit: null },
   });
   const [cancelthetoken,setcancelthetoken] =useState(axios.CancelToken.source()) ;
@@ -25,12 +25,12 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
   const dispatch = useDispatch();
   const canceldownloadhandle=()=>{
     cancelthetoken.cancel();
-    setprogress({ ...progress, t: "Download Cancelled" });
+    setprogress({ ...progress, t: "Downloading Cancelled" });
 setcancelthetoken(axios.CancelToken.source())
     dispatch({
       type: "UPDATE",
       payload: {
-        progress: { ...progress, t: "Download Cancelled" },
+        progress: { ...progress, t: "Downloading Cancelled" },
       }
     });
    
@@ -85,7 +85,7 @@ setcancelthetoken(axios.CancelToken.source())
                 setprogress({
                   p: percentage,
                   title: videotitle,
-                  t: "Downloading completed",
+                  t: "Downloading Completed",
                   total: byteSize(progress.total),
                   cancelthetoken:cancelthetoken,
                   canceldownloadhandle
@@ -96,7 +96,7 @@ setcancelthetoken(axios.CancelToken.source())
                     progress: {
                       p: percentage,
                       title: videotitle,
-                      t: "Downloading completed",
+                      t: "Downloading Completed",
                       total: byteSize(progress.total),
                       cancelthetoken:cancelthetoken.token,canceldownloadhandle
                     }
@@ -158,7 +158,6 @@ setcancelthetoken(axios.CancelToken.source())
             className={Styles.close}
             onClick={() => {
               showdownloadhandle();
-
             }}
           >
             <FontAwesomeIcon size="3x" icon={faClose} />

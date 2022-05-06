@@ -1,4 +1,4 @@
-const initialstate=[]
+const initialstate=[];
 
 const Reducer2=(state=initialstate,action)=>
 {

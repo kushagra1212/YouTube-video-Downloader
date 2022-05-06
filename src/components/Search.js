@@ -22,7 +22,15 @@ class Search extends Component {
         <input
           id={Styles.searchinput}
           value={this.state.text}
-          onChange={(e) => this.handlechange(e)}
+          onChange={(e) => {
+            this.handlechange(e);
+        
+           
+          }}
+          onKeyDown={(e)=>{
+            if(e.key==="Enter")
+            this.state.searchhanddler(e.target.value);
+          }}
           placeholder="Search here"
         ></input>
         <button

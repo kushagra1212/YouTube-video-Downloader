@@ -44,6 +44,7 @@
   border-radius: 10px;
   box-shadow: 2px 2px 100px 2px black;
   animation-fill-mode: forwards;
+  overflow-y: scroll;
 }
 .listdiv2 {
   position: absolute;
@@ -53,8 +54,16 @@
   z-index: 2000;
   animation: sidelistanm2 0.5s;
   animation-timing-function: ease-in-out;
-
+  overflow-y: scroll;
   animation-fill-mode: forwards;
+}
+.maindiv1 {
+  position: absolute;
+  z-index: 20000;
+  width: 100vw;
+  height: 100vh;
+  margin: 0%;
+  filter: blur(3px);
 }
 .item {
   z-index: 1000;
@@ -90,6 +99,10 @@
   box-shadow: 1px 0px 10px 0px rgb(119 109 109 / 75%);
   animation: background-color ease-in-out cubic-bezier(0.47, 0, 0.745, 0.715) 1s;
   animation: transform ease-in-out cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.2s;
+}
+.cancelbut:hover {
+  transform: scale(1.01);
+  cursor: pointer;
 }
 @keyframes sidelistanm1 {
   from {
