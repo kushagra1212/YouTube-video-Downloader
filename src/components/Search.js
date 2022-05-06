@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 
 import Styles from "./Search.module.css";
@@ -17,6 +18,7 @@ class Search extends Component {
   render() {
     return (
       <div id={Styles.searchdiv}>
+         
         <input
           id={Styles.searchinput}
           value={this.state.text}

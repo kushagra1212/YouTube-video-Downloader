@@ -1,55 +1,70 @@
-*{
-    margin:0%;
-    padding:0%;
+* {
+  margin: 0%;
+  padding: 0%;
 }
-#searchdiv{
-    width:70%;
-    height:50px;
-    position: relative;;
-    align-self: center;
-    top:20px;
-    left:15%;
-    align-items: center;
-    display: flex;
-    font-size: 1em;
-    border:2px solid rgba(128, 128, 128, 0.151);
-    border-radius: 2px 2px;
-    box-shadow: 1px 1px 2px rgb(93, 114, 121);
+#searchdiv {
+  width: 70%;
+  height: 50px;
+  position: relative;
+  align-self: center;
+  top: 20px;
+  left: 15%;
+  align-items: center;
+  display: flex;
+  font-size: 1em;
+  border: 2px solid rgba(128, 128, 128, 0.151);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 1px #80808036;
+  justify-content: space-around;
 }
 
-#searchinput{
-    width:80%;
-    height:50%;
-    margin-right: 2%;
-    outline: none;
-    border:2px solid rgba(230, 221, 221, 0.534);
-    border-radius:10px;
-    margin-left:1em;
+#searchinput {
+  width: 80%;
+  height: 80%;
+  /* margin-right: 2%; */
+  outline: none;
+  border: 2px solid rgba(230, 221, 221, 0.534);
+  border-radius: 10px;
+  /* margin-left: 1em; */
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 600;
 }
-#searchbut{
-    height:50%;
- border:3px solid rgba(255, 255, 255, 0);
-    outline: none;
-    padding:0.3em;
-    border-radius: 5px;
-    background-color: yellow;
-    box-shadow: 2px 2px 5px 2px gray;
+#searchbut {
+  border: 3px solid rgba(255, 255, 255, 0);
+  outline: none;
+  padding: em;
+  border-radius: 5px;
+  background-color: #673ab7;
+  box-shadow: 2px 2px 5px 2px #8080805c;
+  transform: scale(1);
+  color: white;
+  font-weight: 700;
+  padding: 0.3em;
+  transition: box-shadow ease-in-out cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: transform ease cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-#searchbut:active{
-    background-color: turquoise;
-    color: white;
+#searchbut:hover {
+  box-shadow: 0px 0px 0px 1px #8080802b;
+  transform: scale(1.1);
+  cursor: pointer;
 }
-@media only screen and (max-width:475px)
-{
-    #searchdiv{
-        top:2px;
-        height: 30px;
-        padding: 0%;
+#searchbut:active {
+  background-color: turquoise;
+  color: white;
+  box-shadow: 0px 0px 0px 1px #8080802b;
+}
+@media only screen and (max-width: 475px) {
+  #searchdiv {
+    top: 2px;
+    height: 30px px;
+    padding: 0%;
+    width: 80%;
+  }
+  #searchbut {
+    padding: 0%;
 
-    }
-    #searchbut{
-        padding: 0%;
-    
-        height: 20px;
-    }
+    height: 20px;
+  }
 }

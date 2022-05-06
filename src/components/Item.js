@@ -5,9 +5,12 @@ import Search from "./Search";
 import List from "./List";
 import Sidelist from "./Sidelist";
 import Downloader from "./Downloader";
-import thumbnailload from "../images/BubblePreloader.gif";
+import thumbnailload from "../images/Loading_icon.gif";
 import titleload from "../images/MessagePreloader.gif";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+   
+import { faCircleArrowDown} from "@fortawesome/free-solid-svg-icons";
+import { simpleNumber } from "../utitls/getSingleNumber";
 import { connect } from "react-redux";
 const urll = "https://youtube-downloader11.herokuapp.com";
 const key = process.env.REACT_APP_KEY;
@@ -56,6 +59,10 @@ class Item extends Component {
       called: false,
       showdownload: false,
       show: this.props,
+      uploadedAt:"",
+      authorName:"",
+      authorAvatar:"",
+      views:""
     };
     this.goup = createRef();
     this.newref = createRef();
@@ -93,6 +100,7 @@ class Item extends Component {
         { title: titleload, thumbnails: [{ url: thumbnailload }] },
       ],
     });
+    
     this.setState({ things: "Loading..." });
     this.setState({ title: "" });
     if (!this.state.notwork) {
@@ -108,6 +116,7 @@ class Item extends Component {
           },
         })
         .then((res) => {
+          
           this.setState({ video: res.data.items[0], things: "" });
           this.setState({ title: res.data.items[0].snippet.title });
           this.setState({ videoList: [] });
@@ -127,14 +136,15 @@ class Item extends Component {
       axios
         .get(`${urll}/search/${this.state.text}/${maxresult}`)
         .then((res) => {
+            console.log(res.data);
           //  (res.data);
           this.setState({ things: "" });
           this.setState({ video: res.data.items[2], things: "" });
-          this.setState({ title: res.data.items[2].title });
+          this.setState({ title: res.data.items[2].title,authorName:res.data.items[2].author.name,authorAvatar:res.data.items[2].author.avatars[0].url,views:simpleNumber(res.data.items[2].views,0),uploadedAt:res.data.items[2].uploadedAt });
           this.setState({ videoList: [] });
           this.setState({ called: true });
           res.data.items.map((ele, id) => {
-            if (ele.type === "video") {
+            if (ele.type === "video" && id!==2) {
               this.setState({ videoList: [...this.state.videoList, ele] });
             }
             return null;
@@ -222,7 +232,10 @@ class Item extends Component {
   };
   setselectedvideo = (singlevideo) => {
  if(this.state.toggle==="Hide") this.showit();
+ console.log(singlevideo,"hello");
+
     this.setState({ video: singlevideo, title: singlevideo.title });
+    this.setState({ authorName:singlevideo.author.name,authorAvatar:singlevideo.author.avatars[0].url,views:simpleNumber(singlevideo.views,0),uploadedAt:singlevideo.uploadedAt });
     this.goup.scrollIntoView({ behavior: "smooth" });
 
   };
@@ -270,19 +283,26 @@ class Item extends Component {
             <div ref={(ref) => (this.goup = ref)} id={Styles.mainvideodiv}>
               <div id={Styles.mainvideo}> {this.show()} </div>
               <h2 id={Styles.mainvideotitle}>{this.state.title} </h2>
-              <div id={Styles.maindescription}>
-                <button
-                  id={Styles.mainvideodescriptionbut}
-                  onClick={this.butclickhandel.bind(this)}
-                >{`${this.state.toggle} description`}</button>
+              {this.state.things===""?  <div id={Styles.maindescription}>
+              <div style={{opacity:'0.5'}} ><strong>{this.state.views}</strong> {" views"}
+              </div>
+              <div className={Styles.channelInfo}>
+              <img width="100px" height="100px" src={this.state.authorAvatar} alt=""/>
+              {this.state.authorName}
+              </div>
+              
+              {this.state.uploadedAt}
                 <p id={Styles.mainvideodescription}>{this.state.description}</p>
                 <button
                   onClick={() => this.setState({ showdownload: true })}
                   id={Styles.downloadbut}
                 >
                   Download
+              {" "}
+                  <FontAwesomeIcon icon={faCircleArrowDown} />
+                  
                 </button>
-              </div>
+              </div>:null}
             </div>
             
               <List
@@ -321,4 +341,5 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
+
 export default connect(mapStateToProp, mapDispatchToProps)(Item);

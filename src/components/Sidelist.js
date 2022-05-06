@@ -2,7 +2,9 @@
 
 import Styles from "./Sidelist.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
    
+import { faCircleArrowDown} from "@fortawesome/free-solid-svg-icons";
 
 const Sidelist = () => {
 
@@ -18,16 +20,17 @@ const Sidelist = () => {
           onClick={() => dispatch({ type: "toggle", payload: { show: true } })}
           className={Styles.sidelist}
         >
-          <img width="25px" height="25px" alt="NAN" src="https://img2.pngio.com/filedownload-iconpng-wikimedia-commons-download-icon-png-875_875.png" />
+         
+      <FontAwesomeIcon  size="3x" icon={faCircleArrowDown} />
         </button>
         {show ? (
           <div className={Styles.listdiv1}>
-             {!progress.length>0?<h3> Downloading will be Shown here</h3>:null}
+             {!progress.length>0?<h3> Nothing is on download</h3>:null}
             {progress.slice(0).reverse().map((ele, id) => {
               console.log(ele)
               if (ele.total.value) {
                 return (
-                  <div className={Styles.item} key={id}>
+                  <div className={Styles.item} styles={ele.t==="Download Cancelled"?{backgroundColor:"#d81b60"}:{}} key={id}>
                    <div className={Styles.title}  > {ele.title}</div>
                     <h3>
                       {ele.p}% {ele.t}
@@ -35,7 +38,7 @@ const Sidelist = () => {
                     <h4>
                       Total Size : {ele.total.value} {ele.total.unit}
                     </h4>
-                    {ele.t!=="Download Cancelled" ?<button onClick={()=>{ele.canceldownloadhandle();
+                    {ele.t!=="Download Cancelled" && ele.t!=="Downloading completed" ?<button className={Styles.cancelbut} onClick={()=>{ele.canceldownloadhandle();
                    
                     
                   }}  >cancel</button>:null}

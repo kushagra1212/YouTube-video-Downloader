@@ -1,105 +1,114 @@
-#mainvideodiv
-{
-    width:60%;
-    position: absolute;;
-    display:flex;
-    
-    flex-direction: column;
-    margin-left:5%;
-    margin-top:50px;
-    
-    
-    border:2px solid rgba(242, 241, 243, 0.226);
-    border-radius:10px 10px;
-    box-shadow:2px 2px 10px grey;
-    background-color: white;
-    
+#mainvideodiv {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  margin-top: 50px;
+  border: 2px solid rgba(242, 241, 243, 0.226);
+  border-radius: 10px 10px;
+  /* box-shadow: 2px 2px 10px grey; */
+  background-color: white;
+  align-items: stretch;
+  background-color: snow;
+}
+.channelInfo {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+  background-color: #ab47bc;
+  color: white;
+  border-radius: 10px;
+  padding: 1%;
+  font-weight: bold;
+  box-shadow: 0.4px 0.4px 2px 0.4px rgba(128, 128, 128, 0.61);
+}
+.channelInfo img {
+  width: 15%;
+  height: 50%;
+  border-radius: 50px;
+}
+#downloadbut {
+  position: relative;
+  background-color: #388e3c;
+  outline: none;
+  border: 2px solid #ffffff00;
+  border-radius: 5px;
+  padding: 2px;
+  width: 100%;
+  font-size: 1.4em;
+  font-weight: 700;
+  margin-top: 2%;
+  color: white;
+  transform: scale(1);
+  box-shadow: 1px 0px 10px 0px rgb(119 109 109 / 75%);
+  animation: background-color ease-in-out cubic-bezier(0.47, 0, 0.745, 0.715) 1s;
+  animation: transform ease-in-out cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.2s;
+}
+#downloadbut:hover {
+  background-color: #2a6c2e;
+  transform: scale(1.01);
+  cursor: pointer;
+}
+#downloadbut:active {
+  background-color: rgb(248, 60, 27);
+  cursor: pointer;
+}
+#mainvideo iframe {
+  border-radius: 10px 10px;
+  box-shadow: 2px 2px 10px grey;
+  width: 100%;
 }
 
-#downloadbut{
-    position: relative;
-    background-color: tomato;
-    outline: none;
-    border: 2px solid white;
-    border-radius: 5px;
-    padding: 2px;
-    margin-top: 0%;
-    color: white;
-    box-shadow: 2px 2px 2px rgba(119, 109, 109, 0.747);
+#mainvideotitle {
+  margin: 0.3em;
+  font-size: 1em;
 }
-#downloadbut:active{
-background-color: rgb(248, 60, 27);
-}
-#mainvideo iframe
-{
-    border-radius:10px 10px;
-    box-shadow:2px 2px 10px grey;
-    width:100%;
+#mainvideodescriptionbut {
+  border-radius: 3px 3px;
+  outline: none;
+  border-color: rgba(226, 221, 215, 0.178);
+  background-color: rgb(179, 234, 248);
+  padding: 0.5em;
 
+  font-size: 0.6em;
+  width: 100%;
 }
 
-#mainvideotitle
-{
-    margin:0.3em;
-    font-size: 1em;
+#mainvideodescription {
+  font-size: 1em;
 }
-#mainvideodescriptionbut
-{
-    border-radius:3px 3px;
-    outline:none;
-    border-color: rgba(226, 221, 215, 0.178);
-    background-color:rgb(179, 234, 248);
-    padding:0.5em;
-    
-    font-size: 0.6em;
-    width:100%;
+#maindescription {
+  width: 100%;
+  font-size: 1em;
 }
 
-#mainvideodescription
-{
-    font-size: 1em;
-}
-#maindescription
-{
-    width:100%;
-    font-size: 1em;
-}
-
-
-@media only screen and (min-width:768px)
-{
-    #mainvideodiv{
-        width:50%;
-    }
-    #mainvideo iframe
-    {
-        height:16em;
-    }
+@media only screen and (min-width: 768px) {
+  #mainvideodiv {
+    width: 50%;
+  }
+  #mainvideo iframe {
+    height: 16em;
+  }
 }
 
-@media only screen and (min-width:1024px)
-{
-    #mainvideodiv{
-        width:50%;
-    }
-    #mainvideo iframe
-    {
-        height:20em;
-    }
+@media only screen and (min-width: 1024px) {
+  #mainvideodiv {
+    width: 50%;
+  }
+  #mainvideo iframe {
+    height: 20em;
+  }
 }
-@media only screen and (max-width:475px)
-{
-    #mainvideo iframe
-{
-    height:15em;
-}
-    #mainvideodiv
-    {
-       
-        width:90%;
-        top:0%;
-        
-        padding: 0%;
-    }
-  
+@media only screen and (max-width: 475px) {
+  #mainvideo iframe {
+    height: 15em;
+  }
+  #mainvideodiv {
+    width: 90%;
+    top: 0%;
+
+    padding: 0%;
+  }
 }

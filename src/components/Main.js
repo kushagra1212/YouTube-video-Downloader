@@ -10,10 +10,6 @@ class Main extends React.Component{
     {
     
         return(
-        
-                
-        
-        
         <Item/>
     
       

@@ -4,7 +4,9 @@ import axios from "axios";
 import Styles from "./Downloader.module.css";
 import byteSize from "byte-size";
 import { useDispatch } from "react-redux";
-
+import { faCircleArrowDown, faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+   
 const url = "https://youtube-downloader11.herokuapp.com";
 
 const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
@@ -149,18 +151,23 @@ setcancelthetoken(axios.CancelToken.source())
 
   return (
     <>
+  
       <div className={Styles.maindiv}>
-        <label>{toptext}</label>
-        <div className={Styles.divofinput}>
-          <button
+     <div style={{display:"flex",justifyContent:"flex-end",width: "100%"}} >
+     <button
             className={Styles.close}
             onClick={() => {
               showdownloadhandle();
 
             }}
           >
-            X
+            <FontAwesomeIcon size="3x" icon={faClose} />
           </button>
+     </div>
+        <label>{toptext}</label>
+        
+        <div className={Styles.divofinput}>
+         
           <input
             placeholder="Paste URL"
             value={videourl}
@@ -190,9 +197,7 @@ setcancelthetoken(axios.CancelToken.source())
             ) : null}
           </label>
         </div>
-        <button onClick={downloadhandle} className={Styles.downloadbut}>
-          Download
-        </button>
+      
 
         {loading ? (
           <div>
@@ -217,7 +222,10 @@ setcancelthetoken(axios.CancelToken.source())
               </div>
             )}
           </div>
-        ) : null}
+        ) :  <button onClick={downloadhandle} className={Styles.downloadbut}>
+        Download{" "}
+        <FontAwesomeIcon icon={faCircleArrowDown} />
+      </button>}
       </div>
     </>
   );
