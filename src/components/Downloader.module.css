@@ -31,8 +31,7 @@
   align-items: center;
   justify-content: center;
 }
-.close {
-}
+
 .input {
   margin: 10px;
   outline: none;
@@ -117,26 +116,15 @@
   border-radius: 50px;
   /* height: 50%; */
   width: 40px;
+  transform: scale(1);
+  animation: transform ease-in-out cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.2s;
 }
-@media only screen and (max-width: 475px) {
-  .maindiv {
-    z-index: 999;
-    border: 2px solid rgba(0, 0, 0, 0);
-    background-color: rgb(54, 104, 241);
-    border-radius: 20px;
-    box-shadow: 10px 10px 100px 100px rgba(0, 0, 0, 0.514);
-  }
-  .select {
-    border: 2px solid grey;
-    background-color: indianred;
-    border-radius: 10px;
-  }
-  .close {
-    top: -30%;
-    left: 90%;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-  }
+.close:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.close:active {
+  transform: scale(1.1);
+  cursor: pointer;
 }

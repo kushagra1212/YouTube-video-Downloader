@@ -103,12 +103,13 @@
 }
 @media only screen and (max-width: 475px) {
   #mainvideo iframe {
-    height: 15em;
+    /* top: 0%; */
+    /* padding: 0%; */
+    margin-left: 0%;
   }
   #mainvideodiv {
-    width: 90%;
-    top: 0%;
-
+    margin: 0%;
+    width: 100%;
     padding: 0%;
   }
 }

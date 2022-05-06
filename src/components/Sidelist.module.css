@@ -110,8 +110,6 @@
 }
 @media only screen and (max-width: 475px) {
   .sidelist {
-    top: 4%;
-    border: 2px solid white;
-    border-radius: 20%10px;
+    margin: 0%;
   }
 }
