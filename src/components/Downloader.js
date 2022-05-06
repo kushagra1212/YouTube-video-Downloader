@@ -6,7 +6,7 @@ import byteSize from "byte-size";
 import { useDispatch } from "react-redux";
 import { faCircleArrowDown, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-   
+
 const url = "https://youtube-downloader11.herokuapp.com";
 
 const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
@@ -19,22 +19,23 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
     t: "Downloading Completed",
     total: { value: null, unit: null },
   });
-  const [cancelthetoken,setcancelthetoken] =useState(axios.CancelToken.source()) ;
+  const [cancelthetoken, setcancelthetoken] = useState(
+    axios.CancelToken.source()
+  );
 
   let percentage = null;
   const dispatch = useDispatch();
-  const canceldownloadhandle=()=>{
+  const canceldownloadhandle = () => {
     cancelthetoken.cancel();
     setprogress({ ...progress, t: "Downloading Cancelled" });
-setcancelthetoken(axios.CancelToken.source())
+    setcancelthetoken(axios.CancelToken.source());
     dispatch({
       type: "UPDATE",
       payload: {
-        progress: { ...progress, t: "Downloading Cancelled" },
-      }
+        progress: { ...progress, title:videotitle,t: "Downloading Cancelled" },
+      },
     });
-   
-  }
+  };
   useEffect(() => {
     if (videoid) {
       setvideourl(`https://www.youtube.com/watch?v=${videoid}`);
@@ -72,7 +73,16 @@ setcancelthetoken(axios.CancelToken.source())
           },
         })
         .then((results) => {
-          dispatch({ type: "ADD", payload: { progress: progress } });
+          dispatch({
+            type: "ADD",
+            payload: {
+              progress: {
+                p: percentage,
+                title: videotitle,
+                t: "Downloading Completed",
+              },
+            },
+          });
 
           axios
             .get(`${url}/download2`, {
@@ -87,8 +97,8 @@ setcancelthetoken(axios.CancelToken.source())
                   title: videotitle,
                   t: "Downloading Completed",
                   total: byteSize(progress.total),
-                  cancelthetoken:cancelthetoken,
-                  canceldownloadhandle
+                  cancelthetoken: cancelthetoken.token,
+                  canceldownloadhandle,
                 });
                 dispatch({
                   type: "UPDATE",
@@ -98,8 +108,9 @@ setcancelthetoken(axios.CancelToken.source())
                       title: videotitle,
                       t: "Downloading Completed",
                       total: byteSize(progress.total),
-                      cancelthetoken:cancelthetoken.token,canceldownloadhandle
-                    }
+                      cancelthetoken: cancelthetoken.token,
+                      canceldownloadhandle,
+                    },
                   },
                 });
               },
@@ -148,13 +159,13 @@ setcancelthetoken(axios.CancelToken.source())
     }
   };
 
-
   return (
     <>
-  
       <div className={Styles.maindiv}>
-     <div style={{display:"flex",justifyContent:"flex-end",width: "100%"}} >
-     <button
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+        >
+          <button
             className={Styles.close}
             onClick={() => {
               showdownloadhandle();
@@ -162,11 +173,10 @@ setcancelthetoken(axios.CancelToken.source())
           >
             <FontAwesomeIcon size="3x" icon={faClose} />
           </button>
-     </div>
+        </div>
         <label>{toptext}</label>
-        
+
         <div className={Styles.divofinput}>
-         
           <input
             placeholder="Paste URL"
             value={videourl}
@@ -196,7 +206,6 @@ setcancelthetoken(axios.CancelToken.source())
             ) : null}
           </label>
         </div>
-      
 
         {loading ? (
           <div>
@@ -210,9 +219,8 @@ setcancelthetoken(axios.CancelToken.source())
                 </h6>
                 <button
                   onClick={() => {
-                  canceldownloadhandle();
-                  showdownloadhandle();
-                   
+                    canceldownloadhandle();
+                    showdownloadhandle();
                   }}
                   className={Styles.canceldownloadbut}
                 >
@@ -221,10 +229,11 @@ setcancelthetoken(axios.CancelToken.source())
               </div>
             )}
           </div>
-        ) :  <button onClick={downloadhandle} className={Styles.downloadbut}>
-        Download{" "}
-        <FontAwesomeIcon icon={faCircleArrowDown} />
-      </button>}
+        ) : (
+          <button onClick={downloadhandle} className={Styles.downloadbut}>
+            Download <FontAwesomeIcon icon={faCircleArrowDown} />
+          </button>
+        )}
       </div>
     </>
   );

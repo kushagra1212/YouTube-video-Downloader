@@ -232,7 +232,7 @@ class Item extends Component {
   };
   setselectedvideo = (singlevideo) => {
  if(this.state.toggle==="Hide") this.showit();
- console.log(singlevideo,"hello");
+
 
     this.setState({ video: singlevideo, title: singlevideo.title });
     this.setState({ authorName:singlevideo.author.name,authorAvatar:singlevideo.author.avatars[0].url,views:simpleNumber(singlevideo.views,0),uploadedAt:singlevideo.uploadedAt });

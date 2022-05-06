@@ -9,8 +9,10 @@ const Reducer2=(state=initialstate,action)=>
             [...state,action.payload.progress]
             )
         case "UPDATE":
-            state.pop()
-            return([...state,action.payload.progress])    
+            let temp=[...state];
+           let index= temp.findIndex((ele)=>ele.title===action.payload.progress.title);
+           temp[index]=action.payload.progress;
+            return(temp)    
         default :
         return (state)
     }

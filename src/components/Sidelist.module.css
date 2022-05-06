@@ -59,7 +59,7 @@
 }
 .maindiv1 {
   position: absolute;
-  z-index: 20000;
+  z-index: 200;
   width: 100vw;
   height: 100vh;
   margin: 0%;

@@ -1,9 +1,9 @@
 
 
 import Styles from "./Sidelist.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-   
+   import { useEffect } from "react/cjs/react.production.min";
 import { faCircleArrowDown} from "@fortawesome/free-solid-svg-icons";
 
 const Sidelist = () => {
