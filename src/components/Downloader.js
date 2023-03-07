@@ -67,15 +67,38 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
     if (videourl && select) {
       setloading(true);
       seterr({ ...err, err: false, select: '', videourl: '' });
-
+      let decodedurl = encodeURIComponent(videourl);
       axios
-        .post(`${url}/download`, {
-          body: {
-            videourl: videourl,
-            videoquality: select,
+        .get(`${url}/download/${select}/${decodedurl}`, {
+          responseType: 'blob',
+          onDownloadProgress(progress) {
+            percentage = Math.floor((progress.loaded * 100) / progress.total);
+
+            setprogress({
+              p: percentage,
+              title: videotitle,
+              t: 'Downloading Completed',
+              total: byteSize(progress.total),
+              cancelthetoken: cancelthetoken.token,
+              canceldownloadhandle,
+            });
+            dispatch({
+              type: 'UPDATE',
+              payload: {
+                progress: {
+                  p: percentage,
+                  title: videotitle,
+                  t: 'Downloading Completed',
+                  total: byteSize(progress.total),
+                  cancelthetoken: cancelthetoken.token,
+                  canceldownloadhandle,
+                },
+              },
+            });
           },
+          cancelToken: cancelthetoken.token,
         })
-        .then((results) => {
+        .then((res) => {
           dispatch({
             type: 'ADD',
             payload: {
@@ -87,58 +110,24 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
             },
           });
 
-          axios
-            .get(`${url}/download2`, {
-              responseType: 'blob',
-              onDownloadProgress(progress) {
-                percentage = Math.floor(
-                  (progress.loaded * 100) / progress.total
-                );
+          if (!res.data.message) {
+            const link = document.createElement('a');
+            const myurl = window.webkitURL || window.URL;
+            let b = new Blob([res.data]);
 
-                setprogress({
-                  p: percentage,
-                  title: videotitle,
-                  t: 'Downloading Completed',
-                  total: byteSize(progress.total),
-                  cancelthetoken: cancelthetoken.token,
-                  canceldownloadhandle,
-                });
-                dispatch({
-                  type: 'UPDATE',
-                  payload: {
-                    progress: {
-                      p: percentage,
-                      title: videotitle,
-                      t: 'Downloading Completed',
-                      total: byteSize(progress.total),
-                      cancelthetoken: cancelthetoken.token,
-                      canceldownloadhandle,
-                    },
-                  },
-                });
-              },
-              cancelToken: cancelthetoken.token,
-            })
-            .then((res) => {
-              if (!res.data.message) {
-                const link = document.createElement('a');
-                const myurl = window.webkitURL || window.URL;
-                let b = new Blob([res.data]);
+            const uRl = myurl.createObjectURL(b);
 
-                const uRl = myurl.createObjectURL(b);
+            //video.src=uRl;
 
-                //video.src=uRl;
+            // video.play();
 
-                // video.play();
-
-                link.href = uRl;
-                link.setAttribute('download', `${videotitle}.mp4`); //or any other extension
-                document.body.appendChild(link);
-                link.click();
-              } else {
-                console.log(res.data.message);
-              }
-            });
+            link.href = uRl;
+            link.setAttribute('download', `${videotitle}.mp4`); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+          } else {
+            console.log(res.data.message);
+          }
         })
         .catch((err) => {
           seterr({ ...err, err: true, select: '', videourl: 'url is invalid' });
