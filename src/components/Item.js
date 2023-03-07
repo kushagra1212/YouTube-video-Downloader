@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { simpleNumber } from '../utitls/getSingleNumber';
 import { connect } from 'react-redux';
-const urll = process.env.REACT_APP_BACKEND_URL;
+const url = process.env.REACT_APP_BACKEND_URL;
 const key = process.env.REACT_APP_KEY;
 const maxresult = 30;
 const getTheInitalVideoList = (length) => {
@@ -27,7 +27,7 @@ class Item extends Component {
     super(props);
     this.state = {
       things: 'Loading...',
-      videoList: getTheInitalVideoList(30),
+      videoList: getTheInitalVideoList(10),
       toggle: 'Show',
       video: {},
       description: ``,
@@ -48,7 +48,7 @@ class Item extends Component {
   }
   youtube = async () => {
     this.setState({
-      videoList: getTheInitalVideoList(30),
+      videoList: getTheInitalVideoList(10),
     });
 
     this.setState({ things: 'Loading...' });
@@ -83,7 +83,7 @@ class Item extends Component {
         });
     } else {
       axios
-        .get(`${urll}/search/${this.state.text}/${maxresult}`)
+        .get(`${url}/search/${this.state.text}/${maxresult}`)
         .then((res) => {
           console.log(res.data);
           //  (res.data);

@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-import Styles from "./Downloader.module.css";
-import byteSize from "byte-size";
-import { useDispatch } from "react-redux";
-import { faCircleArrowDown, faClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Styles from './Downloader.module.css';
+import byteSize from 'byte-size';
+import { useDispatch } from 'react-redux';
+import { faCircleArrowDown, faClose } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const url = "https://youtube-downloader11.herokuapp.com";
-
+const url = process.env.REACT_APP_BACKEND_URL;
 const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
-  const [err, seterr] = useState({ err: false, select: "", videourl: "" });
-  const [select, setselect] = useState("Select Format");
-  const [videourl, setvideourl] = useState("");
+  const [err, seterr] = useState({ err: false, select: '', videourl: '' });
+  const [select, setselect] = useState('Select Format');
+  const [videourl, setvideourl] = useState('');
   const [loading, setloading] = useState(false);
   const [progress, setprogress] = useState({
     p: 0,
-    t: "Downloading Completed",
+    t: 'Downloading Completed',
     total: { value: null, unit: null },
   });
   const [cancelthetoken, setcancelthetoken] = useState(
@@ -27,12 +26,16 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
   const dispatch = useDispatch();
   const canceldownloadhandle = () => {
     cancelthetoken.cancel();
-    setprogress({ ...progress, t: "Downloading Cancelled" });
+    setprogress({ ...progress, t: 'Downloading Cancelled' });
     setcancelthetoken(axios.CancelToken.source());
     dispatch({
-      type: "UPDATE",
+      type: 'UPDATE',
       payload: {
-        progress: { ...progress, title:videotitle,t: "Downloading Cancelled" },
+        progress: {
+          ...progress,
+          title: videotitle,
+          t: 'Downloading Cancelled',
+        },
       },
     });
   };
@@ -46,24 +49,24 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
       seterr({
         ...err,
         err: true,
-        videourl: "video url cant be black",
-        select: "",
+        videourl: 'video url cant be black',
+        select: '',
       });
       return;
     }
-    if (select === "Select Format") {
+    if (select === 'Select Format') {
       seterr({
         ...err,
         err: true,
-        select: "Please choose video format",
-        videourl: "",
+        select: 'Please choose video format',
+        videourl: '',
       });
       return;
     }
 
     if (videourl && select) {
       setloading(true);
-      seterr({ ...err, err: false, select: "", videourl: "" });
+      seterr({ ...err, err: false, select: '', videourl: '' });
 
       axios
         .post(`${url}/download`, {
@@ -74,19 +77,19 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
         })
         .then((results) => {
           dispatch({
-            type: "ADD",
+            type: 'ADD',
             payload: {
               progress: {
                 p: percentage,
                 title: videotitle,
-                t: "Downloading Completed",
+                t: 'Downloading Completed',
               },
             },
           });
 
           axios
             .get(`${url}/download2`, {
-              responseType: "blob",
+              responseType: 'blob',
               onDownloadProgress(progress) {
                 percentage = Math.floor(
                   (progress.loaded * 100) / progress.total
@@ -95,18 +98,18 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
                 setprogress({
                   p: percentage,
                   title: videotitle,
-                  t: "Downloading Completed",
+                  t: 'Downloading Completed',
                   total: byteSize(progress.total),
                   cancelthetoken: cancelthetoken.token,
                   canceldownloadhandle,
                 });
                 dispatch({
-                  type: "UPDATE",
+                  type: 'UPDATE',
                   payload: {
                     progress: {
                       p: percentage,
                       title: videotitle,
-                      t: "Downloading Completed",
+                      t: 'Downloading Completed',
                       total: byteSize(progress.total),
                       cancelthetoken: cancelthetoken.token,
                       canceldownloadhandle,
@@ -118,7 +121,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
             })
             .then((res) => {
               if (!res.data.message) {
-                const link = document.createElement("a");
+                const link = document.createElement('a');
                 const myurl = window.webkitURL || window.URL;
                 let b = new Blob([res.data]);
 
@@ -129,7 +132,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
                 // video.play();
 
                 link.href = uRl;
-                link.setAttribute("download", `${videotitle}.mp4`); //or any other extension
+                link.setAttribute('download', `${videotitle}.mp4`); //or any other extension
                 document.body.appendChild(link);
                 link.click();
               } else {
@@ -138,24 +141,24 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
             });
         })
         .catch((err) => {
-          seterr({ ...err, err: true, select: "", videourl: "url is invalid" });
+          seterr({ ...err, err: true, select: '', videourl: 'url is invalid' });
         });
 
-      const video = document.createElement("video");
-      video.setAttribute("preload", "metadata");
-      video.setAttribute("width", "320");
-      video.setAttribute("height", "240");
-      video.setAttribute("controls", "controls");
-      if (video.canPlayType("video/mp4")) {
-        video.setAttribute("src", "movie.mp4");
+      const video = document.createElement('video');
+      video.setAttribute('preload', 'metadata');
+      video.setAttribute('width', '320');
+      video.setAttribute('height', '240');
+      video.setAttribute('controls', 'controls');
+      if (video.canPlayType('video/mp4')) {
+        video.setAttribute('src', 'movie.mp4');
       } else {
-        video.setAttribute("src", "movie.ogg");
+        video.setAttribute('src', 'movie.ogg');
       }
 
       //document.body.appendChild(video)
 
-      setselect("Select Format");
-      setvideourl("");
+      setselect('Select Format');
+      setvideourl('');
     }
   };
 
@@ -163,7 +166,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
     <>
       <div className={Styles.maindiv}>
         <div
-          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+          style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}
         >
           <button
             className={Styles.close}
@@ -186,7 +189,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
           />
           <label>
             {err.err ? (
-              <label style={{ color: "red" }}>{err.videourl}</label>
+              <label style={{ color: 'red' }}>{err.videourl}</label>
             ) : null}
           </label>
           <select
@@ -202,7 +205,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
           </select>
           <label>
             {err.err ? (
-              <label style={{ color: "red" }}>{err.select}</label>
+              <label style={{ color: 'red' }}>{err.select}</label>
             ) : null}
           </label>
         </div>
@@ -215,7 +218,7 @@ const Downloader = ({ videoid, toptext, videotitle, showdownloadhandle }) => {
               <div>
                 <h4>Downloading {progress.p}% Completed</h4>
                 <h6>
-                  {progress.total.value} {progress.total.unit}{" "}
+                  {progress.total.value} {progress.total.unit}{' '}
                 </h6>
                 <button
                   onClick={() => {
