@@ -24,6 +24,7 @@ const DownloadUI = ({
     const xhr = new XMLHttpRequest();
     xhr.open('GET', videoUrl, true);
     xhr.responseType = 'blob';
+    xhr.withCredentials = true;
 
     xhr.onload = () => {
       if (xhr.status === 200) {
