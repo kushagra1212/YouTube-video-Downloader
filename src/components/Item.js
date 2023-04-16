@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { simpleNumber } from '../utitls/getSingleNumber';
 import { connect } from 'react-redux';
-const url = process.env.REACT_APP_BACKEND_URL;
+const url = process.env._REACT_APP_BACKEND_URL;
 const key = process.env.REACT_APP_KEY;
 const maxresult = 30;
 const getTheInitalVideoList = (length) => {
@@ -85,7 +85,6 @@ class Item extends Component {
       axios
         .get(`${url}/search/${this.state.text}/${maxresult}`)
         .then((res) => {
-          console.log(res.data);
           //  (res.data);
           this.setState({ things: '' });
           this.setState({ video: res.data.items[2], things: '' });
