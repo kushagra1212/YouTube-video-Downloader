@@ -12,9 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { simpleNumber } from '../utitls/getSingleNumber';
 import { connect } from 'react-redux';
-const url = process.env._REACT_APP_BACKEND_URL;
+const url = process.env.REACT_APP_BACKEND_URL;
 const key = process.env.REACT_APP_KEY;
-const maxresult = 30;
+const maxresult = 10;
 const getTheInitalVideoList = (length) => {
   let videoList = [];
   for (let i = 0; i < length; i++) {
@@ -33,7 +33,6 @@ class Item extends Component {
       description: ``,
       text: 'covid',
       title: '',
-      notwork: true,
       called: false,
       showdownload: false,
       show: this.props,
@@ -53,61 +52,32 @@ class Item extends Component {
 
     this.setState({ things: 'Loading...' });
     this.setState({ title: '' });
-    if (!this.state.notwork) {
-      await axios
-        .get(`https://www.googleapis.com/youtube/v3/search`, {
-          params: {
-            part: 'snippet',
-            key: key,
-            type: 'video',
-            q: this.state.text,
-            maxResults: maxresult,
-            controls: 1,
-          },
-        })
-        .then((res) => {
-          this.setState({ video: res.data.items[0], things: '' });
-          this.setState({ title: res.data.items[0].snippet.title });
-          this.setState({ videoList: [] });
-          this.setState({ called: true });
-          res.data.items.map((ele) => {
-            this.setState({ videoList: [...this.state.videoList, ele] });
-            return null;
-          });
 
-          return res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-          this.setState({ notwork: true });
+    axios
+      .get(`${url}/search/${this.state.text}/${maxresult}`)
+      .then((res) => {
+        //  (res.data);
+        this.setState({
+          things: '',
+          video: res.data.items[2],
+          title: res.data.items[2].title,
+          authorName: res.data.items[2].author.name,
+          authorAvatar: res.data.items[2].author.avatars[0].url,
+          views: simpleNumber(res.data.items[2].views, 0),
+          uploadedAt: res.data.items[2].uploadedAt,
+          videoList: [],
+          called: true,
         });
-    } else {
-      axios
-        .get(`${url}/search/${this.state.text}/${maxresult}`)
-        .then((res) => {
-          //  (res.data);
-          this.setState({ things: '' });
-          this.setState({ video: res.data.items[2], things: '' });
-          this.setState({
-            title: res.data.items[2].title,
-            authorName: res.data.items[2].author.name,
-            authorAvatar: res.data.items[2].author.avatars[0].url,
-            views: simpleNumber(res.data.items[2].views, 0),
-            uploadedAt: res.data.items[2].uploadedAt,
-          });
-          this.setState({ videoList: [] });
-          this.setState({ called: true });
-          res.data.items.map((ele, id) => {
-            if (ele.type === 'video' && id !== 2) {
-              this.setState({ videoList: [...this.state.videoList, ele] });
-            }
-            return null;
-          });
-        })
-        .catch((err) => {
-          console.log(err);
+        res.data.items.map((ele, id) => {
+          if (ele.type === 'video' && id !== 2) {
+            this.setState({ videoList: [...this.state.videoList, ele] });
+          }
+          return null;
         });
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   componentDidMount() {
@@ -116,7 +86,6 @@ class Item extends Component {
     this.setState({ showdownload: false });
   }
   show = () => {
-    let notwork = this.state.notwork;
     if (this.state.things === 'Loading...') {
       return (
         <img
@@ -130,46 +99,24 @@ class Item extends Component {
     } else {
       return (
         <div>
-          {!notwork ? (
-            <iframe
-              title={this.state.video.id.videoId}
-              width="50%"
-              height="400"
-              src={`https://www.youtube.com/embed/${this.state.video.id.videoId}`}
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          ) : (
-            <iframe
-              title={this.state.video.title}
-              width="50%"
-              height="400"
-              src={`https://www.youtube.com/embed/${this.state.video.id}`}
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          )}
+          <iframe
+            title={this.state.video.title}
+            width="50%"
+            height="400"
+            src={`https://www.youtube.com/embed/${this.state.video.id}`}
+            allowFullScreen
+          ></iframe>
         </div>
       );
     }
   };
   showit = () => {
-    if (!this.state.notwork) {
-      if (this.state.toggle === 'Show') {
-        this.setState({ toggle: 'Hide' });
-        this.setState({ description: this.state.video.snippet.description });
-      } else {
-        this.setState({ toggle: 'Show' });
-        this.setState({ description: `` });
-      }
+    if (this.state.toggle === 'Show') {
+      this.setState({ toggle: 'Hide' });
+      this.setState({ description: this.state.video.description });
     } else {
-      if (this.state.toggle === 'Show') {
-        this.setState({ toggle: 'Hide' });
-        this.setState({ description: this.state.video.description });
-      } else {
-        this.setState({ toggle: 'Show' });
-        this.setState({ description: `` });
-      }
+      this.setState({ toggle: 'Show' });
+      this.setState({ description: `` });
     }
   };
   butclickhandel = () => {
@@ -270,7 +217,6 @@ class Item extends Component {
             <List
               getthevideo={this.setselectedvideo}
               videolists={this.state.videoList}
-              notwork={this.state.notwork}
             />
           </div>
         </div>

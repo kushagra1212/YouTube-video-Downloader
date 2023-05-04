@@ -1,8 +1,8 @@
-import React from "react";
-import { simpleNumber } from "../utitls/getSingleNumber";
-import Styles from "./List.module.css";
+import React from 'react';
+import { simpleNumber } from '../utitls/getSingleNumber';
+import Styles from './List.module.css';
 
-const List = ({ videolists, notwork, getthevideo }) => {
+const List = ({ videolists, getthevideo }) => {
   const selectionhandle = (ele) => {
     getthevideo(ele);
   };
@@ -22,7 +22,7 @@ const List = ({ videolists, notwork, getthevideo }) => {
               src={ele.thumbnails[0].url}
               alt="hello"
             />
-            {videotitle === "/static/media/MessagePreloader.4e51e83e.gif" ? (
+            {videotitle === '/static/media/MessagePreloader.4e51e83e.gif' ? (
               <img
                 alt="not found"
                 width="100%"
@@ -34,13 +34,13 @@ const List = ({ videolists, notwork, getthevideo }) => {
                 <h3>{videotitle}</h3>
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                   }}
                 >
-                  <div style={{ opacity: "0.5" }}>
-                    <strong>{simpleNumber(ele.views,0)}</strong> {" views"}
+                  <div style={{ opacity: '0.5' }}>
+                    <strong>{simpleNumber(ele.views, 0)}</strong> {' views'}
                   </div>
                   <div> {ele.uploadedAt}</div>
                 </div>
@@ -54,25 +54,3 @@ const List = ({ videolists, notwork, getthevideo }) => {
 };
 
 export default List;
-/* {!this.state.notwork? <div id={Styles.mainlistdiv}>
-        {this.state.videolist.map((ele, id) => {
-          let videoId = ele.id.videoId;
-
-          let videotitle = ele.snippet.title;
-          return (
-            <div
-              key={id}
-              onClick={this.selectionhandle.bind(this, ele)}
-              id={Styles.eachlistdiv}
-            >
-              <img
-                id={Styles.eachlistimg}
-                src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg
-          `}
-                alt="Thumbnail"
-              ></img>
-              <h3 id={Styles.eachlisttitle}>{videotitle} </h3>
-            </div>
-          );
-        })}
-      </div>: */
